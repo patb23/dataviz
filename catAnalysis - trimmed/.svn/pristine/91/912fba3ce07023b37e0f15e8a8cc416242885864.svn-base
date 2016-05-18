@@ -1,0 +1,3 @@
+<section data-ng-controller="FacetsController">
+	This is the Facets view
+</section>

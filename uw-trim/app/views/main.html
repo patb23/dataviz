@@ -1,0 +1,81 @@
+<section>
+<h2>&nbsp;&nbsp;&nbsp;&nbsp;Quality of Book Monthly Report</h2>
+<div class="row">
+  <div class="col-sm-5" id="us-chart" dc-chart="geoChoroplethChart" dc-dimension="states" dc-group="stateRaisedSum"
+       dc-width="400"
+       dc-height="280" dc-post-setup-chart="postSetupMap" dc-on-post-redraw="latestCount" dc-on-filtered="latestCount">
+    <strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;In-Force Premium by States </strong>
+    <a class="reset" href="javascript:reset();dc.redrawAll();" style="display: none;">reset</a>
+    <span class="reset" style="display: none;"> | Current filter: <span class="filter"></span></span>
+
+    <div class="clearfix"></div>
+  </div>
+  <div id="rest" class="col-sm-5">
+    <div id="map-container" >
+      <strong>Map view </strong><a class="reset">reset</a>
+      <div id="map-div" class="col-sm-5"></div>
+    </div>
+
+  </div>
+</div>
+
+<div class="row" >
+  <div>
+    <div dc-chart="dataCount" dc-dimension="ndx" dc-group="all" class="dc-data-count">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span
+      class="filter-count"></span>&nbsp;selected out of<span class="total-count"></span>&nbsp;records |<a
+      ng-click="resetAll()">Reset All</a></div>
+  </div>
+</div>
+
+<div class="row" >
+
+  <div dc-chart="bubbleChart" dc-width="500" dc-height="220" dc-transition-duration="1500"
+       dc-margins="{top: 10, right: 5, bottom: 40, left: 40}" dc-dimension="profit"
+       dc-group="groupByProfit" dc-colors="colorbrewer.RdYlGn[9]" dc-color-domain="[-500, 500]"
+       dc-max-bubble-relative-size="0.3" dc-x="d3.scale.linear().domain([0, 3000])"
+       dc-y="d3.scale.linear().domain([-100, 100])" dc-r="d3.scale.linear().domain([0, 500])" dc-elastic-y="true"
+       dc-elastic-x="true" dc-y-axis-padding="100" dc-x-axis-padding="500" dc-render-horizontal-grid-lines="true"
+       dc-render-vertical-grid-lines="true" dc-x-axis-label="'No. of Policies'" dc-y-axis-label="'Premium written (m)'"
+       dc-render-label="true" dc-xaxis-ticks="10" dc-render-title="true" dc-options="bubbleChartOptions" class="dc-chart">
+    <strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Premium distribution by Profit Margin</strong>
+    <a class="reset" href="javascript:reset();dc.redrawAll();" style="display: none;">reset</a>
+    <span class="reset" style="display: none;"> | Current filter: <span class="filter"></span></span>
+
+    <div class="clearfix"></div>
+  </div>
+
+
+  <div id="accum" dc-chart="rowChart" dc-width="160" dc-height="160" dc-dimension="accum"
+       dc-group="accumPrm" class="col-xs-2 dc-chart"
+       dc-ordinal-colors="['#b30000', '#e34a33', '#fc8d59', '#fdcc8a', '#fef0d9']" dc-elastic-x="true"
+       dc-post-setup-chart="accumPostSetupChart">
+    <strong>by Accumulation Index </strong>
+    <a class="reset" href="javascript:reset();dc.redrawAll();" style="display: none;">reset</a>
+    <span class="reset" style="display: none;"> | Current filter: <span class="filter"></span></span>
+
+    <div class="clearfix"></div>
+  </div>
+
+  <div id="pm" dc-chart="pieChart" dc-width="160" dc-height="160" dc-dimension="pmDimension"
+       dc-group="groupByPm" class="col-xs-2 dc-chart" dc-radius="80" dc-inner-radius="30"
+       dc-ordinal-colors="['#f0f9e8', '#bae4bc', '#7bccc4', '#43a2ca', '#0868ac']" dc-elastic-x="true"
+       >
+    <strong>Volume by PM Score </strong>
+    <a class="reset" href="javascript:reset();dc.redrawAll();" style="display: none;">reset</a>
+    <span class="reset" style="display: none;"> | Current filter: <span class="filter"></span></span>
+
+    <div class="clearfix"></div>
+  </div>
+  <div id="basis" dc-chart="pieChart" dc-width="160" dc-height="160" dc-dimension="basis"
+       dc-group="prmByBasis" class="col-xs-2 dc-chart" dc-radius="80" dc-inner-radius="30"
+       dc-ordinal-colors="['#f0f9e8', '#bae4bc', '#7bccc4', '#43a2ca', '#0868ac']" dc-elastic-x="true"
+    >
+    <strong>Settlement Type </strong>
+    <a class="reset" href="javascript:reset();dc.redrawAll();" style="display: none;">reset</a>
+    <span class="reset" style="display: none;"> | Current filter: <span class="filter"></span></span>
+
+    <div class="clearfix"></div>
+  </div>
+
+ </div>
+</section>

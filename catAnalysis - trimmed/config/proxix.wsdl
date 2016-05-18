@@ -1,0 +1,1312 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://www.proxixnetwork.com/gsert/" xmlns:s1="http://www.proxixnetwork.com/gsert" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" targetNamespace="http://www.proxixnetwork.com/gsert/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">The GSE Real-Time geocoding interface.</wsdl:documentation>
+  <wsdl:types>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://www.proxixnetwork.com/gsert/">
+      <s:import namespace="http://www.proxixnetwork.com/gsert" />
+      <s:element name="FindPlace">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="session_id" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="cityLine" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="FindPlaceResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="FindPlaceResult" type="tns:PxPointGeocodeResponse" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="PxPointGeocodeResponse">
+        <s:complexContent mixed="false">
+          <s:extension base="s1:GSERTResponseBase">
+            <s:sequence>
+              <s:element minOccurs="0" maxOccurs="1" name="Results" type="tns:ArrayOfPxPointGeocodeResult" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:complexType name="AuthResponse">
+        <s:complexContent mixed="false">
+          <s:extension base="s1:GSERTResponseBase">
+            <s:sequence>
+              <s:element minOccurs="0" maxOccurs="1" name="SessionID" type="s:string" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:complexType name="GSEStringArray">
+        <s:complexContent mixed="false">
+          <s:extension base="s1:GSERTResponseBase">
+            <s:sequence>
+              <s:element minOccurs="0" maxOccurs="1" name="StringArray" type="tns:ArrayOfString" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:complexType name="ArrayOfString">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="string" nillable="true" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="PxPointGeocodeResponse3">
+        <s:complexContent mixed="false">
+          <s:extension base="s1:GSERTResponseBase">
+            <s:sequence>
+              <s:element minOccurs="0" maxOccurs="1" name="PxPointGeocodeResultSets" type="tns:ArrayOfPxPointGeocodeResultSet" />
+              <s:element minOccurs="0" maxOccurs="1" name="BestMatchDataset" type="s:string" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:complexType name="ArrayOfPxPointGeocodeResultSet">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="PxPointGeocodeResultSet" nillable="true" type="tns:PxPointGeocodeResultSet" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="PxPointGeocodeResultSet">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="Results" type="tns:ArrayOfPxPointGeocodeResult" />
+          <s:element minOccurs="0" maxOccurs="1" name="DatasetName" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="IsMultimatch" type="s:boolean" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ArrayOfPxPointGeocodeResult">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="PxPointGeocodeResult" nillable="true" type="s1:PxPointGeocodeResult" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="PxPointGeocodeResponse2">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:PxPointGeocodeResponse">
+            <s:sequence>
+              <s:element minOccurs="0" maxOccurs="1" name="BestMatchDataset" type="s:string" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:element name="Geocode">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="session_id" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="addressLine" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="cityLine" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="datasets" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GeocodeResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GeocodeResult" type="tns:PxPointGeocodeResponse" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="Geocode2">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="session_id" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="addressLine" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="cityLine" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="datasets" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="Geocode2Response">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="Geocode2Result" type="tns:PxPointGeocodeResponse2" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="Geocode3">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="session_id" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="addressLine" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="cityLine" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="datasets" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="Geocode3Response">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="Geocode3Result" type="tns:PxPointGeocodeResponse3" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="FullGeocode3">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="session_id" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="addressLine" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="cityLine" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="datasets" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="FullGeocode3Response">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="FullGeocode3Result" type="tns:PxPointGeocodeResponse3" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="BestGeocode">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="session_id" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="addressLine" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="cityLine" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="datasets" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="BestGeocodeResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="BestGeocodeResult" type="tns:PxPointGeocodeResponse" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="FullGeocode">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="session_id" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="addressLine" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="cityLine" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="datasets" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="FullGeocodeResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="FullGeocodeResult" type="tns:PxPointGeocodeResponse" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="FullGeocode2">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="session_id" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="addressLine" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="cityLine" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="datasets" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="FullGeocode2Response">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="FullGeocode2Result" type="tns:PxPointGeocodeResponse2" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="DiscoverDatasets">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="session_id" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="DiscoverDatasetsResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="DiscoverDatasetsResult" type="tns:GSEStringArray" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="Authenticate">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="username" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="password" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="AuthenticateResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="AuthenticateResult" type="tns:AuthResponse" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="LogSDKInfo">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="sessionId" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="sdkInfo" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="LogSDKInfoResponse">
+        <s:complexType />
+      </s:element>
+      <s:element name="Logout">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="session_id" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="LogoutResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="LogoutResult" type="tns:AuthResponse" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetVersion">
+        <s:complexType />
+      </s:element>
+      <s:element name="GetVersionResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetVersionResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="PxPointGeocodeResponse" nillable="true" type="tns:PxPointGeocodeResponse" />
+      <s:element name="PxPointGeocodeResponse2" nillable="true" type="tns:PxPointGeocodeResponse2" />
+      <s:element name="PxPointGeocodeResponse3" nillable="true" type="tns:PxPointGeocodeResponse3" />
+      <s:element name="GSEStringArray" nillable="true" type="tns:GSEStringArray" />
+      <s:element name="AuthResponse" nillable="true" type="tns:AuthResponse" />
+      <s:element name="string" nillable="true" type="s:string" />
+    </s:schema>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://www.proxixnetwork.com/gsert">
+      <s:complexType name="GSERTResponseBase">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="Status" type="s1:GSERTStatus" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="GSERTStatus">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="statuscode" type="s1:ResultStatus" />
+          <s:element minOccurs="0" maxOccurs="1" name="message" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:simpleType name="ResultStatus">
+        <s:restriction base="s:string">
+          <s:enumeration value="Success" />
+          <s:enumeration value="Warning" />
+          <s:enumeration value="Error" />
+          <s:enumeration value="Fatal" />
+        </s:restriction>
+      </s:simpleType>
+      <s:complexType name="PxPointGeocodeResult">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="Properties" type="s1:ArrayOfPxPointGeocodeResultProperty" />
+          <s:element minOccurs="0" maxOccurs="1" name="Attributes" type="s1:ArrayOfPxPointGeocodeResultAttribute" />
+          <s:element minOccurs="0" maxOccurs="1" name="Segments" type="s1:ArrayOfPxPointGeocodeResultSegment" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ArrayOfPxPointGeocodeResultProperty">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="PxPointGeocodeResultProperty" nillable="true" type="s1:PxPointGeocodeResultProperty" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="PxPointGeocodeResultProperty">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="Name" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Value" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ArrayOfPxPointGeocodeResultAttribute">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="PxPointGeocodeResultAttribute" nillable="true" type="s1:PxPointGeocodeResultAttribute" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="PxPointGeocodeResultAttribute">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="Name" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Value" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ArrayOfPxPointGeocodeResultSegment">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="PxPointGeocodeResultSegment" nillable="true" type="s1:PxPointGeocodeResultSegment" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="PxPointGeocodeResultSegment">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="RangeHigh" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="RangeLow" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="StreetName" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Area" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="State" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Postcode" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+    </s:schema>
+  </wsdl:types>
+  <wsdl:message name="FindPlaceSoapIn">
+    <wsdl:part name="parameters" element="tns:FindPlace" />
+  </wsdl:message>
+  <wsdl:message name="FindPlaceSoapOut">
+    <wsdl:part name="parameters" element="tns:FindPlaceResponse" />
+  </wsdl:message>
+  <wsdl:message name="GeocodeSoapIn">
+    <wsdl:part name="parameters" element="tns:Geocode" />
+  </wsdl:message>
+  <wsdl:message name="GeocodeSoapOut">
+    <wsdl:part name="parameters" element="tns:GeocodeResponse" />
+  </wsdl:message>
+  <wsdl:message name="Geocode2SoapIn">
+    <wsdl:part name="parameters" element="tns:Geocode2" />
+  </wsdl:message>
+  <wsdl:message name="Geocode2SoapOut">
+    <wsdl:part name="parameters" element="tns:Geocode2Response" />
+  </wsdl:message>
+  <wsdl:message name="Geocode3SoapIn">
+    <wsdl:part name="parameters" element="tns:Geocode3" />
+  </wsdl:message>
+  <wsdl:message name="Geocode3SoapOut">
+    <wsdl:part name="parameters" element="tns:Geocode3Response" />
+  </wsdl:message>
+  <wsdl:message name="FullGeocode3SoapIn">
+    <wsdl:part name="parameters" element="tns:FullGeocode3" />
+  </wsdl:message>
+  <wsdl:message name="FullGeocode3SoapOut">
+    <wsdl:part name="parameters" element="tns:FullGeocode3Response" />
+  </wsdl:message>
+  <wsdl:message name="BestGeocodeSoapIn">
+    <wsdl:part name="parameters" element="tns:BestGeocode" />
+  </wsdl:message>
+  <wsdl:message name="BestGeocodeSoapOut">
+    <wsdl:part name="parameters" element="tns:BestGeocodeResponse" />
+  </wsdl:message>
+  <wsdl:message name="FullGeocodeSoapIn">
+    <wsdl:part name="parameters" element="tns:FullGeocode" />
+  </wsdl:message>
+  <wsdl:message name="FullGeocodeSoapOut">
+    <wsdl:part name="parameters" element="tns:FullGeocodeResponse" />
+  </wsdl:message>
+  <wsdl:message name="FullGeocode2SoapIn">
+    <wsdl:part name="parameters" element="tns:FullGeocode2" />
+  </wsdl:message>
+  <wsdl:message name="FullGeocode2SoapOut">
+    <wsdl:part name="parameters" element="tns:FullGeocode2Response" />
+  </wsdl:message>
+  <wsdl:message name="DiscoverDatasetsSoapIn">
+    <wsdl:part name="parameters" element="tns:DiscoverDatasets" />
+  </wsdl:message>
+  <wsdl:message name="DiscoverDatasetsSoapOut">
+    <wsdl:part name="parameters" element="tns:DiscoverDatasetsResponse" />
+  </wsdl:message>
+  <wsdl:message name="AuthenticateSoapIn">
+    <wsdl:part name="parameters" element="tns:Authenticate" />
+  </wsdl:message>
+  <wsdl:message name="AuthenticateSoapOut">
+    <wsdl:part name="parameters" element="tns:AuthenticateResponse" />
+  </wsdl:message>
+  <wsdl:message name="LogSDKInfoSoapIn">
+    <wsdl:part name="parameters" element="tns:LogSDKInfo" />
+  </wsdl:message>
+  <wsdl:message name="LogSDKInfoSoapOut">
+    <wsdl:part name="parameters" element="tns:LogSDKInfoResponse" />
+  </wsdl:message>
+  <wsdl:message name="LogoutSoapIn">
+    <wsdl:part name="parameters" element="tns:Logout" />
+  </wsdl:message>
+  <wsdl:message name="LogoutSoapOut">
+    <wsdl:part name="parameters" element="tns:LogoutResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetVersionSoapIn">
+    <wsdl:part name="parameters" element="tns:GetVersion" />
+  </wsdl:message>
+  <wsdl:message name="GetVersionSoapOut">
+    <wsdl:part name="parameters" element="tns:GetVersionResponse" />
+  </wsdl:message>
+  <wsdl:message name="FindPlaceHttpGetIn">
+    <wsdl:part name="session_id" type="s:string" />
+    <wsdl:part name="cityLine" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="FindPlaceHttpGetOut">
+    <wsdl:part name="Body" element="tns:PxPointGeocodeResponse" />
+  </wsdl:message>
+  <wsdl:message name="GeocodeHttpGetIn">
+    <wsdl:part name="session_id" type="s:string" />
+    <wsdl:part name="addressLine" type="s:string" />
+    <wsdl:part name="cityLine" type="s:string" />
+    <wsdl:part name="datasets" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GeocodeHttpGetOut">
+    <wsdl:part name="Body" element="tns:PxPointGeocodeResponse" />
+  </wsdl:message>
+  <wsdl:message name="Geocode2HttpGetIn">
+    <wsdl:part name="session_id" type="s:string" />
+    <wsdl:part name="addressLine" type="s:string" />
+    <wsdl:part name="cityLine" type="s:string" />
+    <wsdl:part name="datasets" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="Geocode2HttpGetOut">
+    <wsdl:part name="Body" element="tns:PxPointGeocodeResponse2" />
+  </wsdl:message>
+  <wsdl:message name="Geocode3HttpGetIn">
+    <wsdl:part name="session_id" type="s:string" />
+    <wsdl:part name="addressLine" type="s:string" />
+    <wsdl:part name="cityLine" type="s:string" />
+    <wsdl:part name="datasets" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="Geocode3HttpGetOut">
+    <wsdl:part name="Body" element="tns:PxPointGeocodeResponse3" />
+  </wsdl:message>
+  <wsdl:message name="FullGeocode3HttpGetIn">
+    <wsdl:part name="session_id" type="s:string" />
+    <wsdl:part name="addressLine" type="s:string" />
+    <wsdl:part name="cityLine" type="s:string" />
+    <wsdl:part name="datasets" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="FullGeocode3HttpGetOut">
+    <wsdl:part name="Body" element="tns:PxPointGeocodeResponse3" />
+  </wsdl:message>
+  <wsdl:message name="BestGeocodeHttpGetIn">
+    <wsdl:part name="session_id" type="s:string" />
+    <wsdl:part name="addressLine" type="s:string" />
+    <wsdl:part name="cityLine" type="s:string" />
+    <wsdl:part name="datasets" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="BestGeocodeHttpGetOut">
+    <wsdl:part name="Body" element="tns:PxPointGeocodeResponse" />
+  </wsdl:message>
+  <wsdl:message name="FullGeocodeHttpGetIn">
+    <wsdl:part name="session_id" type="s:string" />
+    <wsdl:part name="addressLine" type="s:string" />
+    <wsdl:part name="cityLine" type="s:string" />
+    <wsdl:part name="datasets" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="FullGeocodeHttpGetOut">
+    <wsdl:part name="Body" element="tns:PxPointGeocodeResponse" />
+  </wsdl:message>
+  <wsdl:message name="FullGeocode2HttpGetIn">
+    <wsdl:part name="session_id" type="s:string" />
+    <wsdl:part name="addressLine" type="s:string" />
+    <wsdl:part name="cityLine" type="s:string" />
+    <wsdl:part name="datasets" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="FullGeocode2HttpGetOut">
+    <wsdl:part name="Body" element="tns:PxPointGeocodeResponse2" />
+  </wsdl:message>
+  <wsdl:message name="DiscoverDatasetsHttpGetIn">
+    <wsdl:part name="session_id" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="DiscoverDatasetsHttpGetOut">
+    <wsdl:part name="Body" element="tns:GSEStringArray" />
+  </wsdl:message>
+  <wsdl:message name="AuthenticateHttpGetIn">
+    <wsdl:part name="username" type="s:string" />
+    <wsdl:part name="password" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="AuthenticateHttpGetOut">
+    <wsdl:part name="Body" element="tns:AuthResponse" />
+  </wsdl:message>
+  <wsdl:message name="LogSDKInfoHttpGetIn">
+    <wsdl:part name="sessionId" type="s:string" />
+    <wsdl:part name="sdkInfo" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="LogSDKInfoHttpGetOut" />
+  <wsdl:message name="LogoutHttpGetIn">
+    <wsdl:part name="session_id" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="LogoutHttpGetOut">
+    <wsdl:part name="Body" element="tns:AuthResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetVersionHttpGetIn" />
+  <wsdl:message name="GetVersionHttpGetOut">
+    <wsdl:part name="Body" element="tns:string" />
+  </wsdl:message>
+  <wsdl:message name="FindPlaceHttpPostIn">
+    <wsdl:part name="session_id" type="s:string" />
+    <wsdl:part name="cityLine" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="FindPlaceHttpPostOut">
+    <wsdl:part name="Body" element="tns:PxPointGeocodeResponse" />
+  </wsdl:message>
+  <wsdl:message name="GeocodeHttpPostIn">
+    <wsdl:part name="session_id" type="s:string" />
+    <wsdl:part name="addressLine" type="s:string" />
+    <wsdl:part name="cityLine" type="s:string" />
+    <wsdl:part name="datasets" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GeocodeHttpPostOut">
+    <wsdl:part name="Body" element="tns:PxPointGeocodeResponse" />
+  </wsdl:message>
+  <wsdl:message name="Geocode2HttpPostIn">
+    <wsdl:part name="session_id" type="s:string" />
+    <wsdl:part name="addressLine" type="s:string" />
+    <wsdl:part name="cityLine" type="s:string" />
+    <wsdl:part name="datasets" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="Geocode2HttpPostOut">
+    <wsdl:part name="Body" element="tns:PxPointGeocodeResponse2" />
+  </wsdl:message>
+  <wsdl:message name="Geocode3HttpPostIn">
+    <wsdl:part name="session_id" type="s:string" />
+    <wsdl:part name="addressLine" type="s:string" />
+    <wsdl:part name="cityLine" type="s:string" />
+    <wsdl:part name="datasets" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="Geocode3HttpPostOut">
+    <wsdl:part name="Body" element="tns:PxPointGeocodeResponse3" />
+  </wsdl:message>
+  <wsdl:message name="FullGeocode3HttpPostIn">
+    <wsdl:part name="session_id" type="s:string" />
+    <wsdl:part name="addressLine" type="s:string" />
+    <wsdl:part name="cityLine" type="s:string" />
+    <wsdl:part name="datasets" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="FullGeocode3HttpPostOut">
+    <wsdl:part name="Body" element="tns:PxPointGeocodeResponse3" />
+  </wsdl:message>
+  <wsdl:message name="BestGeocodeHttpPostIn">
+    <wsdl:part name="session_id" type="s:string" />
+    <wsdl:part name="addressLine" type="s:string" />
+    <wsdl:part name="cityLine" type="s:string" />
+    <wsdl:part name="datasets" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="BestGeocodeHttpPostOut">
+    <wsdl:part name="Body" element="tns:PxPointGeocodeResponse" />
+  </wsdl:message>
+  <wsdl:message name="FullGeocodeHttpPostIn">
+    <wsdl:part name="session_id" type="s:string" />
+    <wsdl:part name="addressLine" type="s:string" />
+    <wsdl:part name="cityLine" type="s:string" />
+    <wsdl:part name="datasets" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="FullGeocodeHttpPostOut">
+    <wsdl:part name="Body" element="tns:PxPointGeocodeResponse" />
+  </wsdl:message>
+  <wsdl:message name="FullGeocode2HttpPostIn">
+    <wsdl:part name="session_id" type="s:string" />
+    <wsdl:part name="addressLine" type="s:string" />
+    <wsdl:part name="cityLine" type="s:string" />
+    <wsdl:part name="datasets" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="FullGeocode2HttpPostOut">
+    <wsdl:part name="Body" element="tns:PxPointGeocodeResponse2" />
+  </wsdl:message>
+  <wsdl:message name="DiscoverDatasetsHttpPostIn">
+    <wsdl:part name="session_id" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="DiscoverDatasetsHttpPostOut">
+    <wsdl:part name="Body" element="tns:GSEStringArray" />
+  </wsdl:message>
+  <wsdl:message name="AuthenticateHttpPostIn">
+    <wsdl:part name="username" type="s:string" />
+    <wsdl:part name="password" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="AuthenticateHttpPostOut">
+    <wsdl:part name="Body" element="tns:AuthResponse" />
+  </wsdl:message>
+  <wsdl:message name="LogSDKInfoHttpPostIn">
+    <wsdl:part name="sessionId" type="s:string" />
+    <wsdl:part name="sdkInfo" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="LogSDKInfoHttpPostOut" />
+  <wsdl:message name="LogoutHttpPostIn">
+    <wsdl:part name="session_id" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="LogoutHttpPostOut">
+    <wsdl:part name="Body" element="tns:AuthResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetVersionHttpPostIn" />
+  <wsdl:message name="GetVersionHttpPostOut">
+    <wsdl:part name="Body" element="tns:string" />
+  </wsdl:message>
+  <wsdl:portType name="PxPointGeocodeSoap">
+    <wsdl:operation name="FindPlace">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Lets you find a centroid of a city or postcode, which can be useful in some circumstances.</wsdl:documentation>
+      <wsdl:input message="tns:FindPlaceSoapIn" />
+      <wsdl:output message="tns:FindPlaceSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="Geocode">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Deprecated. Was used to perform a geocode operation against a list of Datasets. You should now use Geocode3.</wsdl:documentation>
+      <wsdl:input message="tns:GeocodeSoapIn" />
+      <wsdl:output message="tns:GeocodeSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="Geocode2">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Deprecated. Was used to return the list of Results for the requested Datasets, plus the name of the Dataset that provided the best match for the address. In addition to the Result properties, this method also returns the GEO_LEVEL attribute from the USPS Dataset. You should now use Geocode3.</wsdl:documentation>
+      <wsdl:input message="tns:Geocode2SoapIn" />
+      <wsdl:output message="tns:Geocode2SoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="Geocode3">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Returns the list of Results for the requested Datasets, plus the name of the Dataset that provided the best match for the address. Each Result includes all the properties, but not the Dataset-specific attributes (except the GEO_LEVEL attribute from the USPS Dataset).</wsdl:documentation>
+      <wsdl:input message="tns:Geocode3SoapIn" />
+      <wsdl:output message="tns:Geocode3SoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="FullGeocode3">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Returns the list of Results for the requested Datasets, plus the name of the Dataset that provided the best match for the address. Each Result includes all the properties and the Dataset-specific set of attributes. Also fully populates multimatch geocode Results.</wsdl:documentation>
+      <wsdl:input message="tns:FullGeocode3SoapIn" />
+      <wsdl:output message="tns:FullGeocode3SoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="BestGeocode">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Returns the standard set of Result properties - but not attributes - for the most accurate (best) Result from among all the Datasets used.</wsdl:documentation>
+      <wsdl:input message="tns:BestGeocodeSoapIn" />
+      <wsdl:output message="tns:BestGeocodeSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="FullGeocode">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Deprecated. Was used to return the standard set of Result properties and the Dataset-specific set of attributes for each Result, and for each Dataset specified. You should now use FullGeocode3.</wsdl:documentation>
+      <wsdl:input message="tns:FullGeocodeSoapIn" />
+      <wsdl:output message="tns:FullGeocodeSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="FullGeocode2">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Deprecated. Was used to return the list of Results for the requested Datasets, plus the name of the Dataset that provided the best match for the address. Each Result includes all the properties and the Dataset-specific set of attributes. You should now use FullGeocode3.</wsdl:documentation>
+      <wsdl:input message="tns:FullGeocode2SoapIn" />
+      <wsdl:output message="tns:FullGeocode2SoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="DiscoverDatasets">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Returns a list of PxPoint Datasets available on this server.</wsdl:documentation>
+      <wsdl:input message="tns:DiscoverDatasetsSoapIn" />
+      <wsdl:output message="tns:DiscoverDatasetsSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="Authenticate">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Manages the authentication and login for GSE Real-Time.</wsdl:documentation>
+      <wsdl:input message="tns:AuthenticateSoapIn" />
+      <wsdl:output message="tns:AuthenticateSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="LogSDKInfo">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Provides this service with information about the caller's SDK. This should only be called by internal GSERT SDK methods.</wsdl:documentation>
+      <wsdl:input message="tns:LogSDKInfoSoapIn" />
+      <wsdl:output message="tns:LogSDKInfoSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="Logout">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Deprecated. Was used to log out of the current session. But now all sessions automatically expire after three hours.</wsdl:documentation>
+      <wsdl:input message="tns:LogoutSoapIn" />
+      <wsdl:output message="tns:LogoutSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetVersion">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Gets the version string of the current GSE Real-Time service.</wsdl:documentation>
+      <wsdl:input message="tns:GetVersionSoapIn" />
+      <wsdl:output message="tns:GetVersionSoapOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:portType name="PxPointGeocodeHttpGet">
+    <wsdl:operation name="FindPlace">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Lets you find a centroid of a city or postcode, which can be useful in some circumstances.</wsdl:documentation>
+      <wsdl:input message="tns:FindPlaceHttpGetIn" />
+      <wsdl:output message="tns:FindPlaceHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="Geocode">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Deprecated. Was used to perform a geocode operation against a list of Datasets. You should now use Geocode3.</wsdl:documentation>
+      <wsdl:input message="tns:GeocodeHttpGetIn" />
+      <wsdl:output message="tns:GeocodeHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="Geocode2">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Deprecated. Was used to return the list of Results for the requested Datasets, plus the name of the Dataset that provided the best match for the address. In addition to the Result properties, this method also returns the GEO_LEVEL attribute from the USPS Dataset. You should now use Geocode3.</wsdl:documentation>
+      <wsdl:input message="tns:Geocode2HttpGetIn" />
+      <wsdl:output message="tns:Geocode2HttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="Geocode3">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Returns the list of Results for the requested Datasets, plus the name of the Dataset that provided the best match for the address. Each Result includes all the properties, but not the Dataset-specific attributes (except the GEO_LEVEL attribute from the USPS Dataset).</wsdl:documentation>
+      <wsdl:input message="tns:Geocode3HttpGetIn" />
+      <wsdl:output message="tns:Geocode3HttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="FullGeocode3">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Returns the list of Results for the requested Datasets, plus the name of the Dataset that provided the best match for the address. Each Result includes all the properties and the Dataset-specific set of attributes. Also fully populates multimatch geocode Results.</wsdl:documentation>
+      <wsdl:input message="tns:FullGeocode3HttpGetIn" />
+      <wsdl:output message="tns:FullGeocode3HttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="BestGeocode">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Returns the standard set of Result properties - but not attributes - for the most accurate (best) Result from among all the Datasets used.</wsdl:documentation>
+      <wsdl:input message="tns:BestGeocodeHttpGetIn" />
+      <wsdl:output message="tns:BestGeocodeHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="FullGeocode">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Deprecated. Was used to return the standard set of Result properties and the Dataset-specific set of attributes for each Result, and for each Dataset specified. You should now use FullGeocode3.</wsdl:documentation>
+      <wsdl:input message="tns:FullGeocodeHttpGetIn" />
+      <wsdl:output message="tns:FullGeocodeHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="FullGeocode2">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Deprecated. Was used to return the list of Results for the requested Datasets, plus the name of the Dataset that provided the best match for the address. Each Result includes all the properties and the Dataset-specific set of attributes. You should now use FullGeocode3.</wsdl:documentation>
+      <wsdl:input message="tns:FullGeocode2HttpGetIn" />
+      <wsdl:output message="tns:FullGeocode2HttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="DiscoverDatasets">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Returns a list of PxPoint Datasets available on this server.</wsdl:documentation>
+      <wsdl:input message="tns:DiscoverDatasetsHttpGetIn" />
+      <wsdl:output message="tns:DiscoverDatasetsHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="Authenticate">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Manages the authentication and login for GSE Real-Time.</wsdl:documentation>
+      <wsdl:input message="tns:AuthenticateHttpGetIn" />
+      <wsdl:output message="tns:AuthenticateHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="LogSDKInfo">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Provides this service with information about the caller's SDK. This should only be called by internal GSERT SDK methods.</wsdl:documentation>
+      <wsdl:input message="tns:LogSDKInfoHttpGetIn" />
+      <wsdl:output message="tns:LogSDKInfoHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="Logout">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Deprecated. Was used to log out of the current session. But now all sessions automatically expire after three hours.</wsdl:documentation>
+      <wsdl:input message="tns:LogoutHttpGetIn" />
+      <wsdl:output message="tns:LogoutHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetVersion">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Gets the version string of the current GSE Real-Time service.</wsdl:documentation>
+      <wsdl:input message="tns:GetVersionHttpGetIn" />
+      <wsdl:output message="tns:GetVersionHttpGetOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:portType name="PxPointGeocodeHttpPost">
+    <wsdl:operation name="FindPlace">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Lets you find a centroid of a city or postcode, which can be useful in some circumstances.</wsdl:documentation>
+      <wsdl:input message="tns:FindPlaceHttpPostIn" />
+      <wsdl:output message="tns:FindPlaceHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="Geocode">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Deprecated. Was used to perform a geocode operation against a list of Datasets. You should now use Geocode3.</wsdl:documentation>
+      <wsdl:input message="tns:GeocodeHttpPostIn" />
+      <wsdl:output message="tns:GeocodeHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="Geocode2">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Deprecated. Was used to return the list of Results for the requested Datasets, plus the name of the Dataset that provided the best match for the address. In addition to the Result properties, this method also returns the GEO_LEVEL attribute from the USPS Dataset. You should now use Geocode3.</wsdl:documentation>
+      <wsdl:input message="tns:Geocode2HttpPostIn" />
+      <wsdl:output message="tns:Geocode2HttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="Geocode3">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Returns the list of Results for the requested Datasets, plus the name of the Dataset that provided the best match for the address. Each Result includes all the properties, but not the Dataset-specific attributes (except the GEO_LEVEL attribute from the USPS Dataset).</wsdl:documentation>
+      <wsdl:input message="tns:Geocode3HttpPostIn" />
+      <wsdl:output message="tns:Geocode3HttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="FullGeocode3">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Returns the list of Results for the requested Datasets, plus the name of the Dataset that provided the best match for the address. Each Result includes all the properties and the Dataset-specific set of attributes. Also fully populates multimatch geocode Results.</wsdl:documentation>
+      <wsdl:input message="tns:FullGeocode3HttpPostIn" />
+      <wsdl:output message="tns:FullGeocode3HttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="BestGeocode">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Returns the standard set of Result properties - but not attributes - for the most accurate (best) Result from among all the Datasets used.</wsdl:documentation>
+      <wsdl:input message="tns:BestGeocodeHttpPostIn" />
+      <wsdl:output message="tns:BestGeocodeHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="FullGeocode">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Deprecated. Was used to return the standard set of Result properties and the Dataset-specific set of attributes for each Result, and for each Dataset specified. You should now use FullGeocode3.</wsdl:documentation>
+      <wsdl:input message="tns:FullGeocodeHttpPostIn" />
+      <wsdl:output message="tns:FullGeocodeHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="FullGeocode2">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Deprecated. Was used to return the list of Results for the requested Datasets, plus the name of the Dataset that provided the best match for the address. Each Result includes all the properties and the Dataset-specific set of attributes. You should now use FullGeocode3.</wsdl:documentation>
+      <wsdl:input message="tns:FullGeocode2HttpPostIn" />
+      <wsdl:output message="tns:FullGeocode2HttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="DiscoverDatasets">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Returns a list of PxPoint Datasets available on this server.</wsdl:documentation>
+      <wsdl:input message="tns:DiscoverDatasetsHttpPostIn" />
+      <wsdl:output message="tns:DiscoverDatasetsHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="Authenticate">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Manages the authentication and login for GSE Real-Time.</wsdl:documentation>
+      <wsdl:input message="tns:AuthenticateHttpPostIn" />
+      <wsdl:output message="tns:AuthenticateHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="LogSDKInfo">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Provides this service with information about the caller's SDK. This should only be called by internal GSERT SDK methods.</wsdl:documentation>
+      <wsdl:input message="tns:LogSDKInfoHttpPostIn" />
+      <wsdl:output message="tns:LogSDKInfoHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="Logout">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Deprecated. Was used to log out of the current session. But now all sessions automatically expire after three hours.</wsdl:documentation>
+      <wsdl:input message="tns:LogoutHttpPostIn" />
+      <wsdl:output message="tns:LogoutHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetVersion">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Gets the version string of the current GSE Real-Time service.</wsdl:documentation>
+      <wsdl:input message="tns:GetVersionHttpPostIn" />
+      <wsdl:output message="tns:GetVersionHttpPostOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="PxPointGeocodeSoap" type="tns:PxPointGeocodeSoap">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="FindPlace">
+      <soap:operation soapAction="http://www.proxixnetwork.com/gsert/FindPlace" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Geocode">
+      <soap:operation soapAction="http://www.proxixnetwork.com/gsert/Geocode" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Geocode2">
+      <soap:operation soapAction="http://www.proxixnetwork.com/gsert/Geocode2" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Geocode3">
+      <soap:operation soapAction="http://www.proxixnetwork.com/gsert/Geocode3" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="FullGeocode3">
+      <soap:operation soapAction="http://www.proxixnetwork.com/gsert/FullGeocode3" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="BestGeocode">
+      <soap:operation soapAction="http://www.proxixnetwork.com/gsert/BestGeocode" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="FullGeocode">
+      <soap:operation soapAction="http://www.proxixnetwork.com/gsert/FullGeocode" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="FullGeocode2">
+      <soap:operation soapAction="http://www.proxixnetwork.com/gsert/FullGeocode2" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DiscoverDatasets">
+      <soap:operation soapAction="http://www.proxixnetwork.com/gsert/DiscoverDatasets" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Authenticate">
+      <soap:operation soapAction="http://www.proxixnetwork.com/gsert/Authenticate" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="LogSDKInfo">
+      <soap:operation soapAction="http://www.proxixnetwork.com/gsert/LogSDKInfo" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Logout">
+      <soap:operation soapAction="http://www.proxixnetwork.com/gsert/Logout" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetVersion">
+      <soap:operation soapAction="http://www.proxixnetwork.com/gsert/GetVersion" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="PxPointGeocodeSoap12" type="tns:PxPointGeocodeSoap">
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="FindPlace">
+      <soap12:operation soapAction="http://www.proxixnetwork.com/gsert/FindPlace" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Geocode">
+      <soap12:operation soapAction="http://www.proxixnetwork.com/gsert/Geocode" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Geocode2">
+      <soap12:operation soapAction="http://www.proxixnetwork.com/gsert/Geocode2" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Geocode3">
+      <soap12:operation soapAction="http://www.proxixnetwork.com/gsert/Geocode3" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="FullGeocode3">
+      <soap12:operation soapAction="http://www.proxixnetwork.com/gsert/FullGeocode3" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="BestGeocode">
+      <soap12:operation soapAction="http://www.proxixnetwork.com/gsert/BestGeocode" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="FullGeocode">
+      <soap12:operation soapAction="http://www.proxixnetwork.com/gsert/FullGeocode" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="FullGeocode2">
+      <soap12:operation soapAction="http://www.proxixnetwork.com/gsert/FullGeocode2" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DiscoverDatasets">
+      <soap12:operation soapAction="http://www.proxixnetwork.com/gsert/DiscoverDatasets" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Authenticate">
+      <soap12:operation soapAction="http://www.proxixnetwork.com/gsert/Authenticate" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="LogSDKInfo">
+      <soap12:operation soapAction="http://www.proxixnetwork.com/gsert/LogSDKInfo" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Logout">
+      <soap12:operation soapAction="http://www.proxixnetwork.com/gsert/Logout" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetVersion">
+      <soap12:operation soapAction="http://www.proxixnetwork.com/gsert/GetVersion" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="PxPointGeocodeHttpGet" type="tns:PxPointGeocodeHttpGet">
+    <http:binding verb="GET" />
+    <wsdl:operation name="FindPlace">
+      <http:operation location="/FindPlace" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Geocode">
+      <http:operation location="/Geocode" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Geocode2">
+      <http:operation location="/Geocode2" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Geocode3">
+      <http:operation location="/Geocode3" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="FullGeocode3">
+      <http:operation location="/FullGeocode3" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="BestGeocode">
+      <http:operation location="/BestGeocode" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="FullGeocode">
+      <http:operation location="/FullGeocode" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="FullGeocode2">
+      <http:operation location="/FullGeocode2" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DiscoverDatasets">
+      <http:operation location="/DiscoverDatasets" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Authenticate">
+      <http:operation location="/Authenticate" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="LogSDKInfo">
+      <http:operation location="/LogSDKInfo" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output />
+    </wsdl:operation>
+    <wsdl:operation name="Logout">
+      <http:operation location="/Logout" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetVersion">
+      <http:operation location="/GetVersion" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="PxPointGeocodeHttpPost" type="tns:PxPointGeocodeHttpPost">
+    <http:binding verb="POST" />
+    <wsdl:operation name="FindPlace">
+      <http:operation location="/FindPlace" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Geocode">
+      <http:operation location="/Geocode" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Geocode2">
+      <http:operation location="/Geocode2" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Geocode3">
+      <http:operation location="/Geocode3" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="FullGeocode3">
+      <http:operation location="/FullGeocode3" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="BestGeocode">
+      <http:operation location="/BestGeocode" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="FullGeocode">
+      <http:operation location="/FullGeocode" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="FullGeocode2">
+      <http:operation location="/FullGeocode2" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DiscoverDatasets">
+      <http:operation location="/DiscoverDatasets" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Authenticate">
+      <http:operation location="/Authenticate" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="LogSDKInfo">
+      <http:operation location="/LogSDKInfo" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output />
+    </wsdl:operation>
+    <wsdl:operation name="Logout">
+      <http:operation location="/Logout" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetVersion">
+      <http:operation location="/GetVersion" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="PxPointGeocode">
+    <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">The GSE Real-Time geocoding interface.</wsdl:documentation>
+    <wsdl:port name="PxPointGeocodeSoap" binding="tns:PxPointGeocodeSoap">
+      <soap:address location="http://www.proxixnetwork.com/gsert/PxPointGeocode.asmx" />
+    </wsdl:port>
+    <wsdl:port name="PxPointGeocodeSoap12" binding="tns:PxPointGeocodeSoap12">
+      <soap12:address location="http://www.proxixnetwork.com/gsert/PxPointGeocode.asmx" />
+    </wsdl:port>
+    <wsdl:port name="PxPointGeocodeHttpGet" binding="tns:PxPointGeocodeHttpGet">
+      <http:address location="http://www.proxixnetwork.com/gsert/PxPointGeocode.asmx" />
+    </wsdl:port>
+    <wsdl:port name="PxPointGeocodeHttpPost" binding="tns:PxPointGeocodeHttpPost">
+      <http:address location="http://www.proxixnetwork.com/gsert/PxPointGeocode.asmx" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

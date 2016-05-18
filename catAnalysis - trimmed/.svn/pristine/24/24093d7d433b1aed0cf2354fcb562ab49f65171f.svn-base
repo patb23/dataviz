@@ -1,0 +1,8 @@
+'use strict';
+
+angular.module('solr').controller('SearchControllerController', ['$scope',
+	function($scope) {
+		// Search controller controller logic
+		// ...
+	}
+]);

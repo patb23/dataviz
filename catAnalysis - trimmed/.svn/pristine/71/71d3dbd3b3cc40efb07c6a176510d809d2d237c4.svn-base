@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <title>{{title}}</title>
+
+
+    <!-- Fav Icon -->
+    <link href="/modules/core/img/brand/favicon.ico" rel="shortcut icon" type="image/x-icon">
+
+    <!--Application CSS Files-->
+    {% for cssFile in cssFiles %}
+    <link rel="stylesheet" href="{{cssFile}}">
+    {% endfor %}
+
+    <!-- HTML5 Shim -->
+    <!--[if lt IE 9]>
+    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+</head>
+<body>
+<div id="wrapper">
+    <!-- Navigation -->
+    <nav class="navbar navbar-default"  style="margin-bottom: 0">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="index.html">Insight Reports</a>
+        </div>
+        <!-- /.navbar-header -->
+
+
+    </div>
+    <div id="page-wrapper">
+
+            <section class="container">
+                {% block content %}{% endblock %}
+            </section>
+        <!--Application JavaScript Files-->
+        {% for jsFile in jsFiles %}
+        <script type="text/javascript" src="{{jsFile}}"></script>
+        {% endfor %}
+
+        {% if process.env.NODE_ENV === 'development' %}
+        <!--Livereload script rendered -->
+        <script type="text/javascript" src="http://{{request.hostname}}:35729/livereload.js"></script>
+        {% endif %}
+    </div>
+
+</body>
+
+</html>

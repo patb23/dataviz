@@ -1,0 +1,5 @@
+'use strict';
+
+// Use application configuration module to register a new module
+console.log('Registering Map Service');
+ApplicationConfiguration.registerModule('mapservice');

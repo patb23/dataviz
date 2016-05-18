@@ -1,0 +1,103 @@
+<section data-ng-controller="SolrController">
+    <div class="row">
+        <div class="col-sm-3">
+            <div class="navbar-default sidebar" role="navigation">
+                <div class="sidebar-nav navbar-collapse">
+                    <ul class="nav" id="side-menu">
+                        <li class="sidebar-search">
+                            <div class="input-group custom-search-form">
+                                <input type="text" class="form-control" ng-model="searchStr" placeholder="Search...">
+                                <span class="input-group-btn">
+                                <button class="btn btn-default" type="button" ng-click="policies()">
+                                    <span class="glyphicon glyphicon-search"></span>
+                                </button>
+                            </span>
+                            </div>
+                            <!-- /input-group -->
+                        </li>
+                        <li class="sidebar-ext">
+                            <ul>
+                                <li ng-repeat="j in data">{{j.value}}
+                                    <ul>
+                                        <li ng-repeat="k in j.pivots"><a ng-href="javascript:angular.noop();"
+                                                                         ng-click="getDetail('{{k.value}}')">{{k.value}}</a>
+                                        </li>
+                                    </ul>
+                                </li>
+
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-3" ng-show="detailFound">
+            <div class="row" style="height: 200px;">
+                <div class="panel panel-default">
+                    <div class="panel-heading">Policy - {{policy[0].policyNumber}}</div>
+                    <div class="panel-body">Addr: {{policy[0].addressLine}} &nbsp;&nbsp;SiteNo:
+                        {{policy[0].locationNo}}
+                    </div>
+                </div>
+            </div>
+            <div class="row" style="height: 300px; overflow:scroll;">
+                <table class="table table-condensed">
+                    <thead>
+                    <tr>
+                        <th>Report Date</th>
+                        <th>AAL</th>
+                        <th>Premium</th>
+                    </tr>
+                    </thead>
+                    <tr ng-repeat="pol in policy">
+                        <td>{{pol.report_date}}</td>
+                        <td>{{pol.aal}}</td>
+                        <td>{{pol.totalPremium}}</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <div class="col-sm-5" id="us-chart" ng-show="detailFound">
+            <div class="row" height="350">
+                <leaflet ng-show="detailFound" id="locations" layers="layers" center="center" markers="markers"
+                         event-broadcast="events" width="340" height="300"></leaflet>
+            </div>
+            <div class="row">
+                <br/><br/>
+
+                <span class="-bold">Statistical figures for the Risks in and around <h4>5 miles.</h4></span>
+                <br/> Count of Policies - <h4>{{statsCount}}</h4>
+                <table class="table table-condensed">
+                    <thead>
+                    <tr>
+                        <th>&nbsp;</th>
+                        <th>Average </th>
+                        <th>Median</th>
+                        <th>90th Percentile</th>
+                    </tr>
+                    </thead>
+                    <tr >
+                        <th>Premium </th>
+                        <td>{{premiumMean}}</td>
+                        <td>{{premiumMedian}}</td>
+                        <td>{{premium90}}</td>
+                    </tr>
+                    <tr >
+                        <th>AAL</th>
+                        <td>{{aalToPremMean}}</td>
+                        <td>{{aalMedian}}</td>
+                        <td>{{aal90}}</td>
+                    </tr>
+                    <tr >
+                        <th>AAL to Prem </th>
+                        <td>{{aalToPremMean}}</td>
+                        <td>{{aal2PremMedian}}</td>
+                        <td>{{aal290}}</td>
+                    </tr>
+                </table>
+
+            </div>
+        </div>
+
+    </div>
+</section>

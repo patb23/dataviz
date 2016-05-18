@@ -1,0 +1,94 @@
+/**
+ * Created by pmeenaks on 8/26/2015.
+ */
+require('es6-promise').polyfill();
+var _ = require('lodash'), common = require('../common.server.controller'),
+    fieldNames = ["PropertyZipCode", "reportDate", "PropertyState"],
+    baseUrl = "dm/query?q=*:*&rows=0",
+    solrClient = common.createClient()
+
+
+function fq(data) {
+
+    this.fieldName = data.fieldName|| fieldNames;
+    this.filterValue = data.filterValue;
+    fq.prototype.getUrl = function () {
+        var value = null;
+    }
+
+
+}
+function SolrFacetClient() {
+
+    this.fieldNames = fieldNames;
+    this.facets = new Map();
+
+    SolrFacetClient.prototype.getFacetUrl = function (start) {
+
+        var facetUrl = "&facet=true&facet.mincount=1";
+
+        fieldNames.forEach(function (item, idx, array) {
+
+            facetUrl = facetUrl + "&field=" + item;
+
+        })
+
+        //if(this.fq) facetUrl = facetUrl+ fq.getUrl();
+        return facetUrl
+
+    }
+
+    SolrFacetClient.prototype.init = function (callback) {
+        //console.log('Inside init  --------------' + this.fieldNames);
+        var localGetData = this.getData;
+        var localFacets = this.facets;
+        //console.log(localFacets);
+        this.fieldNames.forEach(function (item, idx, arr) {
+            localGetData(item);
+        })
+
+        callback(localFacets);
+    }
+
+
+    SolrFacetClient.prototype.getData = function (fieldName) {
+
+        //console.log('Inside get Data');
+        if ((!this.facets) || !this.facets.get(fieldName)) {
+            var facetUrl = "&rows=0&facet=true&facet.mincount=1&json.nl=map" + "&field=" + fieldName;
+            //console.log(baseUrl+facetUrl)
+            solr = denodeify(solrClient.get);
+
+
+            solr(baseUrl + facetUrl).then(function (res) {
+                console.log(res);
+
+                var json = JSON.parse(res);
+                console.log('start');
+                console.log(json.facet_counts.facet_fields);
+                console.log('done');
+                var data = json.facet_counts.facet_fields[fieldName];
+                var modified = data.map(function (dat) {
+                    return {'key': dat[0], 'value': dat[1]};
+                })
+                console.log(modified);
+//                facets.put(fieldName, modified);
+
+            });
+        }
+        //      return facets.get(fieldName);
+
+    }
+
+
+}
+
+exports.facets = function (req, res) {
+
+    var facetClient = new SolrFacetClient();
+    facetClient.init(function (err, result) {
+        //console.log(result);
+        res.send(result);
+    })
+}
+

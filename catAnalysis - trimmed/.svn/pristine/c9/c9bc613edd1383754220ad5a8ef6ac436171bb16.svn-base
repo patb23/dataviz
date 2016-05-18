@@ -1,0 +1,64 @@
+<section data-ng-controller="MapserviceController">
+    <div id="window-title" class="row">
+    <h2>CA Active Fire - Aug 2015</h2>
+    Note: Please wait till the markers are loaded on the page
+    </div>
+    <div id="page-view">
+        <div style="float:left;width: 250px;">test</div>
+        <div style="float: left;">
+            <div class="row">
+                <div class="col-sm-5" id="fire-name">
+                    <label>Active fires :
+                        <select ng-model="selectedFire" ng-change="updateMap()"
+                                ng-options="activeFire.names[1]  for activeFire in activeFireList">
+                        </select>
+                    </label><br/>
+
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-group  pull-right">
+
+                    <img class="spinner" ng-show="loading" src="img/spinner.gif"/>
+
+                </div>
+                <div class="col-sm-5" id="us-chart">
+                    <leaflet layers="layers" center="center" geojson="polygons" markers="markers"
+                             event-broadcast="events" url-hash-center="yes" width="440" height="500"></leaflet>
+                </div>
+
+                <div class="col-md-5" id="policy-detail">
+                    <div id="fire-tab" ng-show="fireSelected">
+                        <table class="table-bordered">
+                            <tr>
+                                <th>Area impacted (in Acres):</th>
+                                <td>{{selectedFire.names[3]}}</td>
+                                <th>Date last updated</th>
+                                <td>{{selectedFire.names[2]}}</td>
+                            </tr>
+                        </table>
+
+                    </div>
+                    <div id="policy-tab" ng-show="policyFound">
+                        <table class="table-bordered">
+                            <tr>
+                                <th>Policy Number:</th>
+                                <td>{{selectedPolicy.policyNumber}}</td>
+                            </tr>
+                            <tr>
+                                <th>Address :</th>
+                                <td>{{selectedPolicy.addressLine}} , {{selectedPolicy.city}}</td>
+                            </tr>
+
+
+                        </table>
+                    </div>
+                </div>
+
+                <div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

@@ -1,0 +1,17 @@
+'use strict';
+
+//Setting up route
+angular.module('solr').config(['$stateProvider',
+	function($stateProvider) {
+		// Solr state routing
+		$stateProvider.
+		state('facets', {
+			url: '/solr/facets',
+			templateUrl: 'modules/solr/views/solr.facet.client.view.html'
+		}).
+		state('solr', {
+			url: '/solr',
+			templateUrl: 'modules/solr/views/solr.client.view.html'
+		});
+	}
+]);

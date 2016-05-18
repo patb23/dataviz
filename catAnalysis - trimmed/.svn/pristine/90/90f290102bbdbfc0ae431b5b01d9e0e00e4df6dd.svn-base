@@ -1,0 +1,101 @@
+'use strict';
+
+angular.module('solr').controller('FacetsController', ['$rootScope', '$window', '$scope', '$stateParams', '$location', '$q', 'Solr',
+    '$http',
+    function ($rootScope, $window, $scope, $stateParams, $location, $q, Solr, $http) {
+        // Facets controller logic
+        // ...
+
+        var s = $scope;
+        var results = new Map();
+        s.fakeCrossfilter = {}
+        s.fakeCrossfilter._dataChanged = true;
+
+        function _fetchData() {
+
+
+            if (s.fakeCrossfilter._dataChanged) {
+                s.fakeCrossfilter._dataChanged = false; // no more fetches, until a chart has had another filter applied.
+                var filters = s.fakeCrossfilter._getFilters();
+                var aPromise  = s.fakeCrossfilter._fetchDataFor(filters);
+
+                aPromise.then(function(data){
+                    data.forEach(function (value, key, map) {
+
+                        results[key] = value;
+                    });
+                    console.log('got results');
+                    var list = dc.chartRegistry.list();
+                    for (var e in results) {
+                        for (var x in list) {
+                            if (list[x].anchorName() == e) {
+                                var chart = list[x];
+                                var group = chart.group();
+                                group._currentData = results[e];
+                            }
+                        }
+                    }
+                    dc.renderAll();
+
+                });
+                // ok we have the data we will send to the server....
+            }
+        }
+
+        function _filterChanged() {
+            s.fakeCrossfilter._dataChanged = true;
+        }
+
+        function _getFilters() {
+            var result = {};
+            var list = dc.chartRegistry.list();
+            for (var e in list) {
+                var chart = list[e];
+                result[chart.anchorName()] = chart.filters()
+            }
+            return result;
+        }
+
+        function _fetchDataFor(filters) {
+
+            console.log('Filters');
+            for (var chartId in filters) {
+                console.log(chartId);
+            }
+            return Solr.getFacets(filters);
+
+        }
+
+        s.fakeCrossfilter._fetchData = _fetchData;
+
+        s.fakeCrossfilter._fetchDataFor = _fetchDataFor;
+        s.fakeCrossfilter._getFilters = _getFilters;
+
+        s.fakeCrossfilter.dimension = {}
+
+        s.fakeCrossfilter.dimension.filter = _filterChanged;
+        s.fakeCrossfilter.dimension.filterExact = _filterChanged;
+        s.fakeCrossfilter.dimension.filterRange = _filterChanged;
+        s.fakeCrossfilter.dimension.filterFunction = _filterChanged;
+        s.fakeCrossfilter.dimension.filterAll = _filterChanged;
+        s.fakeCrossfilter.group = function () {
+            return {
+                _currentData: [],
+                all: function () {
+                    s.fakeCrossfilter._fetchData();
+                    return this._currentData;
+                },
+                top: function (e) {
+                    s.fakeCrossfilter._fetchData();
+                    return this._currentData;
+                }
+            }
+        }
+
+
+        console.log('Refreshing dataa ');
+
+    }
+
+
+]);

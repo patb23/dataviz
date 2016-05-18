@@ -1,0 +1,16 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<kml xmlns='http://earth.google.com/kml/2.1'>
+<Document>
+ <name>ActiveFirePerimeters.kml</name>
+ <open>1</open>
+ <Style id='sh_grn-pushpin'>
+ <BalloonStyle>
+  <!-- a background color for the balloon -->
+  <bgColor>ffffffff</bgColor>
+  <!-- styling of the balloon text -->
+   <text><![CDATA[
+     <font face='Arial'>$[description]</font>
+   ]]></text>
+ </BalloonStyle>
+</Document>
+</kml>

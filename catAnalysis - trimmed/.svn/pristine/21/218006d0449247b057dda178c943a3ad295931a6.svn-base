@@ -1,0 +1,17 @@
+'use strict';
+
+//Setting up route
+angular.module('mapservice').config(['$stateProvider',
+  function ($stateProvider) {
+    // Mapservice state routing
+
+    console.log('inside router');
+    $stateProvider.
+      state('mapservice', {
+        url: '/cat/activeFire',
+        templateUrl: 'modules/mapservice/views/mapservice.client.view.html'
+      });
+
+
+  }
+]);

@@ -1,0 +1,84 @@
+'use strict';
+
+angular.module('solr').factory('Solr', ['$resource', '$http', '$q',
+    function ($resource, $http, $q) {
+        // Solr service logic
+        // ...
+
+        // Public API
+        return {
+
+
+            getFacets:function(args){
+
+                console.log('args');
+                console.log(args);
+                var deferred = $q.defer();
+
+                $http.get('/cat/facet',{params:args}).success(function(response){
+                    var anArray=[];
+                    var facets = new Map();
+                    var array = response;
+                    array.forEach(function(item, index, array){
+                        anArray = item.concat(anArray);
+                    })
+
+
+                    anArray.forEach(function(item, index, array){
+
+                        var anElem = facets.get(item.fieldName) ||[];
+                        anElem.push({'key':item.key, 'value':item.value});
+
+                        facets.set(item.fieldName, anElem);
+
+                    });
+                    deferred.resolve(facets);
+
+                })
+                return deferred.promise;
+
+
+            },
+
+            getNearBy:function(args){
+              var deferred = $q.defer();
+                $http.get('/cat/nearby?latLong='+args).success(function(response){
+
+                    var map = new Map();
+
+                    deferred.resolve(response);
+                });
+                return deferred.promise;
+            },
+            getPolicy:function(args){
+                var deferred = $q.defer();
+                $http.get('/cat/policy?policyNumber='+args).success(function(response){
+
+                    deferred.resolve(response);
+                })
+                return deferred.promise;
+            },
+            getDocuments: function (args) {
+                var deferred = $q.defer();
+                var pivotMap = new Map();
+                $http.get('/cat/policies?param=policyNumber&searchStr=' + args).success(function (response) {
+                    console.log(response.pivots);
+                    if(response.pivots){
+
+                        response.pivots.forEach(function(item,index,array){
+                            var state = item.value;
+                            var polNumbers = pivotMap.get(state);
+                            if(!polNumbers)polNumbers=[];
+                            item.pivots.forEach(function(a,i, arr){
+                               polNumbers.push(a.value);
+                            });
+                            pivotMap.set(state, polNumbers);
+                        })
+                    }
+                    deferred.resolve(response.pivots);
+                });
+                return deferred.promise;
+            }
+        };
+    }
+]);

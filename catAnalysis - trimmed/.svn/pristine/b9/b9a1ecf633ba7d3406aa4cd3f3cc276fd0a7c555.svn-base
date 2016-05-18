@@ -1,0 +1,68 @@
+<!--
+<link rel="stylesheet" href="../../../../public/lib/bootstrap/dist/css/bootstrap.css"/>
+<link rel="stylesheet" href="../../../../public/lib/bootstrap/dist/css/bootstrap-theme.css"/>
+-->
+<section data-ng-controller="FacetsController">
+    <div class="row">
+        <div class="col-xs-3">
+            <div id="PropertyState" dc-chart="pieChart" dc-dimension="fakeCrossfilter.dimension"
+                 dc-group="fakeCrossfilter.group()" dc-radius="80" dc-inner-radius="30"
+                 dc-elastic-x="true">
+            </div>
+            <a class="reset" href="dc.redrawAll();" style="display: none;">reset</a>
+        </div>
+        <div class="col-xs-3">
+            <div id="ConstructionType" dc-chart="pieChart" dc-dimension="fakeCrossfilter.dimension"
+                 dc-group="fakeCrossfilter.group()" dc-radius="80" dc-inner-radius="30"
+                 dc-elastic-x="true">
+            </div>
+            <a class="reset" href="dc.redrawAll();" style="display: none;">reset</a>
+
+        </div>
+        <div class="col-xs-3">
+            <div id="PrecisionDescSource" dc-chart="pieChart" dc-dimension="fakeCrossfilter.dimension"
+                 dc-group="fakeCrossfilter.group()" dc-radius="80" dc-inner-radius="30"
+                 dc-elastic-x="true">
+            </div>
+            <a class="reset" href="dc.redrawAll();" style="display: none;">reset</a>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-3">
+            <div id="SquareFootageUnderRoof" dc-chart="pieChart" dc-dimension="fakeCrossfilter.dimension"
+                 dc-group="fakeCrossfilter.group()" dc-radius="80" dc-inner-radius="30"
+                 dc-elastic-x="true">
+            </div>
+            <a class="reset" href="dc.redrawAll();" style="display: none;">reset</a>
+        </div>
+
+        <div class="col-xs-3">
+            <div id="DistanceToCoast" dc-chart="pieChart" dc-dimension="fakeCrossfilter.dimension"
+                 dc-group="fakeCrossfilter.group()" dc-radius="80" dc-inner-radius="30"
+                 dc-elastic-x="true">
+            </div>
+            <a class="reset" href="dc.redrawAll();" style="display: none;">reset</a>
+        </div>
+        <div class="col-xs-3">
+            <div id="StructureType" dc-chart="pieChart" dc-dimension="fakeCrossfilter.dimension"
+                 dc-group="fakeCrossfilter.group()" dc-radius="80" dc-inner-radius="30"
+                 dc-elastic-x="true">
+            </div>
+            <a class="reset" href="dc.redrawAll();" style="display: none;">reset</a>
+        </div>
+        <div class="col-xs-3">
+            <div id="RoofCoveringType" dc-chart="pieChart" dc-dimension="fakeCrossfilter.dimension"
+                 dc-group="fakeCrossfilter.group()" dc-radius="80" dc-inner-radius="30"
+                 dc-elastic-x="true">
+            </div>
+            <a class="reset" href="dc.redrawAll();" style="display: none;">reset</a>
+        </div>
+        <div class="col-xs-3">
+            <div id="PropertyTerritory" dc-chart="pieChart" dc-dimension="fakeCrossfilter.dimension"
+                 dc-group="fakeCrossfilter.group()" dc-radius="80" dc-inner-radius="30"
+                 dc-elastic-x="true">
+            </div>
+            <a class="reset" href="dc.redrawAll();" style="display: none;">reset</a>
+        </div>
+    </div>
+</section>

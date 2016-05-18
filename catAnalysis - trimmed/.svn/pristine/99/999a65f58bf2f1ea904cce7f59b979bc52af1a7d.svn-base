@@ -1,0 +1,31 @@
+'use strict';
+
+angular.module('mapservice').factory('Mapservice', ['$resource', '$http', '$q',
+  function ($resource, $http, $q) {
+    return {
+      getJson: function () {
+        var deferred = $q.defer();
+        $http.get('/cat/activeFire').success(function (response) {
+
+          deferred.resolve(response);
+        });
+        return deferred.promise;
+      },
+      getMarkers: function(){
+        var deferred = $q.defer();
+
+        $http.get('/cat/listLatLongs').success(function(response){
+          deferred.resolve(response);
+        });
+        return deferred.promise;
+      },
+      getPolicy: function(args){
+        var deferred = $q.defer();
+        $http.get('/cat/policy?latLong='+args).success(function(response) {
+          deferred.resolve(response);
+        });
+        return deferred.promise;
+      }
+    }
+  }
+]);

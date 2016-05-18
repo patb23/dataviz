@@ -1,0 +1,174 @@
+'use strict';
+
+angular.module('solr').controller('SolrController', ['$rootScope', '$window', '$scope', '$stateParams', '$location', 'Solr', '$http','leafletData',
+    function ($rootScope, $window, $scope, $stateParams, $location,Solr, $http, leafletData) {
+
+
+        //first things first :-)
+        var s = $scope;
+
+        s.Math = window.Math;
+        s.dataPresent = false;
+        s.detailFound = false;
+
+        s.center = {};
+        s.layers = {
+            baselayers: {
+                osm: {
+                    name: 'OpenStreetMap',
+                    type: 'xyz',
+                    url: 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
+                }
+            },
+            overlays: {
+                realworld: {
+                    name: "Real world data",
+                    type: "markercluster",
+                    visible: true
+                }
+            }, events: {
+                markers: {
+                    enable: ['click'],
+                    logic: 'emit'
+                }
+            },
+
+        };
+
+        s.bounds = {
+            southWest: {lat: 32.53429, lng: -124.409622},
+            northEast: {lat: 42.00946, lng: -114.130836}
+        };
+
+        var latLong = function(datum){
+
+            var lat = parseFloat(datum.substr(0, datum.indexOf(',-')));
+            var lng = parseFloat(datum.substr(datum.indexOf(',') + 1));
+            return {lat:lat, lng:lng};
+        }
+
+
+        var stringToLatLong = function (data) {
+            return data.map(function (datum) {
+
+                var latLng = latLong(datum);
+
+                var lat = latLng.lat;
+                var lng = latLng.lng;
+                return {
+
+                    layer: 'realworld',
+                    lat: lat,
+                    lng: lng,
+                    getMessageScope: function () {
+                        return $scope;
+                    }
+
+                };
+            });
+
+        };
+
+        var stats = function(args,facets){
+
+            if(args){
+
+
+                s.statsCount = Math.round(parseFloat(args.stats_fields.aal.count));
+                s.aalMean = Math.round(parseFloat(args.stats_fields.aal.mean));
+                s.premiumMean= Math.round(parseFloat(args.stats_fields.premium.mean));
+                s.aalToPremMean=Math.round(parseFloat(args.stats_fields.aalToPremium.mean));
+
+            }
+            if(facets){
+                s.aalMedian = Math.round(parseFloat(facets.aal_percentiles[0]));
+                s.aal90=Math.round(parseFloat(facets.aal_percentiles[1]));
+                s.premiumMedian = Math.round(parseFloat(facets.premium_percentiles[0]));
+                s.premium90=Math.round(parseFloat(facets.premium_percentiles[1]));
+                s.aal2PremMedian= Math.round(parseFloat(facets.aal_2_premium[0]));
+                s.aal290=Math.round(parseFloat(facets.aal_2_premium[1]));
+
+            }
+
+
+        }
+
+
+        s.removeMarkers = function() {
+            s.markers = {};
+        }
+
+        s.addMarkers = function() {
+            angular.extend(s, {
+                markers: {
+                    m1: {
+                        lat: 51.505,
+                        lng: -0.09,
+                        message: "I'm a static marker",
+                    },
+                    m2: {
+                        lat: 51,
+                        lng: 0,
+                        focus: true,
+                        message: "Hey, drag me if you want",
+                        draggable: true
+                    }
+                }
+            });
+        };
+
+        s.policies = function () {
+            Solr.getDocuments(s.searchStr).then(function (data) {
+                s.detailFound = false;
+                $scope.dataPresent = true;
+                $scope.test = "done";
+                console.log(data);
+                $scope.data = data;
+//					$rootScope.$apply();
+            })
+        },
+
+            s.getDetail = function (policy_no) {
+                console.log(policy_no);
+                Solr.getPolicy(policy_no).then(function (data) {
+
+                    s.removeMarkers();
+                    s.detailFound = true;
+                    s.policy = data;
+                    s.latLong = s.policy[0].latLong
+                    if (s.latLong) {
+                        Solr.getNearBy(s.latLong).then(function (data) {
+                            s.latLongs = data.docs;
+                            s.stats = data.stats;
+                            console.log(s.stats);
+                            console.log(data.facets);
+                            stats(data.stats, data.facets);
+                            var center  = latLong(s.latLong);
+                            s.center.lat= center.lat;
+                            s.center.lng= center.lng;
+                            console.log('center is ' + s.center.lat + ', ' + s.center.lng);
+
+                       //     s.center.zoom=7;
+                            var markers = stringToLatLong(s.latLongs);
+                            markers.push(center);
+                            s.markers = markers;
+                            console.log(s.markers);
+
+
+                            leafletData.getMap("locations").then(
+                                function (map) {
+                                    map.fitBounds(s.markers);
+                                    map.invalidateSize();
+
+
+                                }
+                            );
+                        })
+                    }
+                })
+            }
+
+    }
+
+
+]);

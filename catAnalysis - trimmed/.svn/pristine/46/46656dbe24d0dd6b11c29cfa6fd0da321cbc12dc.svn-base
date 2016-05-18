@@ -1,0 +1,145 @@
+'use strict';
+
+angular.module('mapservice').controller('MapserviceController', ['$scope', '$stateParams', '$location', 'Mapservice', '$http', 'leafletEvents',
+  function ($scope, $stateParams, $location, Mapservice, $http, leafletEvents) {
+
+    var s = $scope;
+    s.activeFireList = [];
+    s.selectedFire={};
+    s.activeFireNames=[];
+    s.fireSelected=false;
+    var stringToLatLong = function (data) {
+      return data.map(function (datum) {
+
+        var lat = parseFloat(datum.substr(0, datum.indexOf(',-')));
+        var lng = parseFloat(datum.substr(datum.indexOf(',') + 1));
+
+        var html = " <a href=''>info</a><button type='button' ng-click='doSomeAction()'>Choose</button>";
+        //console.log(lat + '|' + lng);
+        return {
+
+          layer: 'realworld',
+          lat: lat,
+          lng: lng,
+          getMessageScope: function () {
+            return $scope;
+          }
+
+        };
+      });
+
+    };
+    s.policyFound = false;
+    s.loading = true;
+    s.center = {lat: 38.88, lng: -122.47, zoom: 7};
+    s.polygons = {};
+    Mapservice.getMarkers().then(function (response) {
+
+      s.markers = stringToLatLong(response);
+      //console.log('Got markers');
+    })
+    Mapservice.getJson().then(function (response) {
+      s.polygons = {
+        data: response,
+        style: {
+          fillColor: "red",
+          weight: 2,
+          opacity: 1,
+          color: 'white',
+          dashArray: '3',
+          fillOpacity: 0.7
+        },
+        onEachFeature: function (feature, layer) {
+          //console.log(feature);
+          //console.log(feature.geometry.coordinates[0][0][0]);
+          //console.log(feature.geometry.coordinates[0][0][1]);
+          var lng = feature.geometry.coordinates[0][0][0];
+          var lat = feature.geometry.coordinates[0][0][1];
+          var name = feature.properties.name;
+          var names = name.split(' ');
+
+          //console.log(names);
+          if(names.length>4){
+
+
+            var combined = names[1]+' '+names[2]+' '+names[3]+' ' +names[4];
+            //console.log('combined is ' + combined);
+            names.splice(1,4,combined);
+          }
+          var fireKeyVal = new Map();
+          fireKeyVal.set(name,{fireName:name, names:names,lat: lat, lng:lng});
+          s.activeFireNames.push(name);
+          s.activeFireList.push({fireName:name, names:names,lat: lat, lng:lng});
+          layer.bindPopup(feature.properties.name);
+
+        }
+      };
+    })
+    //s.$apply(s.polygons);
+    s.bounds = {
+      southWest: {lat: 32.53429, lng: -124.409622},
+      northEast: {lat: 42.00946, lng: -114.130836}
+    };
+
+    s.center.lat = 38.88;
+    s.center.lng = -122.47;
+    s.center.zoom = 8;
+    s.loading = false;
+
+    s.layers = {
+      baselayers: {
+        osm: {
+          name: 'OpenStreetMap',
+          type: 'xyz',
+          url: 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
+        }
+      },
+      overlays: {
+        realworld: {
+          name: "Real world data",
+          type: "markercluster",
+          visible: true
+        }
+      }, events: {
+        markers: {
+          enable: ['click'],
+          logic: 'emit'
+        }
+      },
+
+    };
+    s.updateMap = function(){
+      console.log(s.selectedFire);
+      s.center.lat = s.selectedFire.lat;
+      s.center.lng = s.selectedFire.lng;
+      s.center.zoom=11;
+      s.fireSelected=true;
+    }
+
+    s.$on('leafletDirectiveMarker.click', function (e, args) {
+      // Args will contain the marker name and other relevant information
+      //console.log( args.model.getMessageScope());
+      //console.log( args.markerName);
+
+      var latLong = args.model.lat + "," + args.model.lng;
+      Mapservice.getPolicy(latLong).then(function (response) {
+
+        s.selectedPolicy = response;
+
+        //console.log(latLong);
+        //console.log(response);
+        s.policyFound = true;
+        //s.$apply();
+      })
+
+    });
+
+
+
+//    var layerEvents = leafletEvents.getAvailableEvents();
+
+  }
+])
+;
+
+
